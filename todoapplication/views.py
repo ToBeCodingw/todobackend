@@ -60,4 +60,46 @@ class TodoView(View):
 
         #결과 리턴
         return JsonResponse({"list":list(todos.values())})
+    
+    def get(self, request):
+        #get방시ㄱ에서 userid라는 파라미터 읽기
+        # userid = request.GET["userid"]
+        # todos = Todo.objects.filter(userid=userid)
+        userid = request.GET["userid"]
+        todos = Todo.objects.filter()
+        return JsonResponse({"list":list(todos.values())})
 
+    def put(self, request):
+        #클라이언트의 데이터를 json 형식으로 가져오기
+        request = json.loads(request.body)
+
+        userid = request["userid"]
+        id = request["id"]
+        done = request["done"]
+
+        #수정할 데이터를 찾아옵니다. +수정
+
+        todo = Todo.objects.get(id=id)
+        todo.done = done
+        #save는 기본키의 값이 있으면 수정 없으면 삽입
+        todo.save()
+
+        #결과 리턴
+        return JsonResponse({"list":list(todo.values())})
+    
+    def delete(self, request):
+        #클라이언트의 데이터를 json 형식으로 가져오기
+        request = json.loads(request.body)
+
+        userid = request["userid"]
+        id = request["id"]
+
+        todo = Todo.objects.get(id=id)
+        if userid == todo.userid:
+            todo.delete()
+
+        todos = Todo.objects.filter(userid=userid)
+
+        #결과 리턴
+        return JsonResponse({"list":list(todos.values())})
+    

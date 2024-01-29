@@ -78,9 +78,9 @@ WSGI_APPLICATION = "todoproject.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "adam",
+        "NAME": "bingo",
         "USER": "root",
-        "PASSWORD": "wnddkd",
+        "PASSWORD": "0000",
         "HOST": "127.0.0.1",
         "PORT": "3306"
     }
